@@ -5,30 +5,32 @@
 
 #define STR_LEN 80 //Includes null terminator
 
-typedef struct String {
+typedef struct String String;
+
+struct String {
   char* str;
 
   // Constructor
-  void* (*init)     (void* self, char* val);
+  String* (*init)     (char* val);
 
   // Methods
-  void* (*substr)   (void* self, int head, int tail);
-  void* (*findchar) (void* self, char character, int index);
-  void* (*find)     (void* self, void* sub);
-  void* (*append)   (void* self, void* postfix);
-  int   (*contains) (void* self, void* str);
-  void* (*toString) (void* self);
-  void  (*destroy)  (void* self);
-} String;
+  String* (*substr)   (String* self, int head, int tail);
+  String* (*find)     (String* self, String* sub);
+  String* (*append)   (String* self, String* postfix);
+  int     (*findchar) (String* self, char character, int index);
+  int     (*contains) (String* self, String* str);
+  char*   (*toString) (String* self);
+  void    (*destroy)  (String* self);
+};
 
-void* String_new      (size_t size, String proto, char* val);
-void* String_init     (void* self, char* val);
-void  String_destroy  (void* self);
+String* String_new      (size_t size, String proto, char* val);
+String* String_init     (char* val);
+void    String_destroy  (String* self);
 
-void* String_find     (void* self, char* sub);
-void* String_substr   (void* self, int head, int tail);
-void  String_append   (void* self, char* str);
-int   String_findchar (void* self, char character, int index);
-int   String_contains (void*iself, char* sub);
+String* String_find     (String* self, String* sub);
+String* String_substr   (String* self, int head, int tail);
+void    String_append   (String* self, String* str);
+int     String_findchar (String* self, char character, int index);
+int     String_contains (String* self, String* sub);
 
 #endif

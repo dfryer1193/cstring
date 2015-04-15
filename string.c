@@ -5,17 +5,24 @@
  * Does not assume self exists.
  */
 
-void* String_init(void* self, char* val) {
+String String_init(String self, char* val) {
+
+  if(&self) { // make sure you're not doing something silly
  
-  String* working = self;
-  
-  if(working) { // make sure you're not doing something silly
- 
-    *(working->str) = *val;
+    self.str = val;
+    
+    self.init = String_init;
+    
+    self.substr = String_substr;
+    self.find = String_find;
+    self.append = String_append; // why is this complaining?
+    self.findchar = String_findchar;
+    self.contains = String_contains;
+    self.destroy = String_destroy;
 
   }
 
-  return working;
+  return self;
 
 }
 
@@ -25,9 +32,8 @@ void* String_init(void* self, char* val) {
  * the terminating character.
  */
 
-void* String_substr(void* self, int head, int tail) {
+String* String_substr(String self, int head, int tail) {
   
-  String* working = self;
   String newstr;
   char* substring;
   int i;
@@ -37,9 +43,9 @@ void* String_substr(void* self, int head, int tail) {
     
     for (i = head; i < tail; i++) {
       
-      if (*(working->str + i)){
+      if (*(self.str + i)){
  
-        *(substring + i) = *(working->str + i);
+        *(substring + i) = *(self.str);
 
       } else {
         
@@ -61,12 +67,16 @@ void* String_substr(void* self, int head, int tail) {
 /*
  *
  */
-void* String_find(void* self, char* sub) {
 
-  String* working = self;
-  char* begin = working->str;
+String* String_find(String self, String sub) {
 
-  
+  char* begin = self.str;
+  int index;
+
+  index = self.findchar(self, *begin, 0);
+
+  while (*(self.str + index) && (*(self.str + index))) {
+  }
  
   return NULL;
 }

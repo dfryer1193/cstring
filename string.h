@@ -20,7 +20,7 @@ struct String {
   int     (*contains) (String self, String str);
   char*   (*toString) (String self);
   void    (*destroy)  (String self);
-  void    (*append)   (String self, String* postfix);
+  void    (*append)   (String self, String str);
 };
 
 String* String_new      (size_t size, String proto, char* val);

@@ -15,7 +15,7 @@ String String_init(String self, char* val) {
     
     self.substr = String_substr;
     self.find = String_find;
-    self.append = String_append; // why is this complaining?
+    self.append = String_append;
     self.findchar = String_findchar;
     self.contains = String_contains;
     self.destroy = String_destroy;
@@ -81,3 +81,14 @@ String* String_find(String self, String sub) {
   return NULL;
 }
 
+void String_append(String self, String str) {
+  return;
+}
+
+int String_findchar(String self, char character, int index) {
+  return -1;
+}
+
+void String_destroy(String self) {
+  return;
+}

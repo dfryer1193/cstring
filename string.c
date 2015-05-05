@@ -86,6 +86,21 @@ void String_append(String self, String str) {
 }
 
 int String_findchar(String self, char character, int index) {
+  
+  char* curchar = self.str;
+  curchar += index;
+  
+  while (*curchar != '\0' && (curchar - self.str < STR_LEN)) {
+  
+    if (*curchar == character) {
+      
+      return curchar - self.str;
+    
+    }
+
+    curchar++;
+  }
+
   return -1;
 }
 

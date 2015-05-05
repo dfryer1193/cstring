@@ -14,7 +14,6 @@ String String_init(String self, char* val) {
     self.init = String_init;
     
     self.substr = String_substr;
-    self.find = String_find;
     self.append = String_append;
     self.findchar = String_findchar;
     self.contains = String_contains;
@@ -38,7 +37,7 @@ String* String_substr(String self, int head, int tail) {
   char* substring;
   int i;
 
-  if (head >= 0 && tail < 80 && tail > head) {
+  if (head >= 0 && tail < STR_LEN && tail > head) {
     substring=malloc(tail - head);
     
     for (i = head; i < tail; i++) {
@@ -65,20 +64,46 @@ String* String_substr(String self, int head, int tail) {
 }
 
 /*
- *
+ * Returns the index of the end of the string. -1 means sub was not found
  */
 
-String* String_find(String self, String sub) {
+int String_contains(String self, String sub, int index) {
 
-  char* begin = self.str;
-  int index;
+  char* begin = sub.str;
+  char* start = self.str + index;
+  int sub_index=0;
 
-  index = self.findchar(self, *begin, 0);
-
-  while (*(self.str + index) && (*(self.str + index))) {
+  index = self.findchar(self, *begin, index);
+  if (index == -1) {
+    return -1;
   }
- 
-  return NULL;
+
+  for (sub_index; *(begin + sub_index) != '\0' && sub_index < STR_LEN; sub_index++) {
+
+    if (*(begin + sub_index) != *(start + index)) {
+
+      sub_index = 0;
+      index = self.findchar(self, *begin, index);
+
+      if (index < 0) {
+      
+        return -1;
+      }
+
+    } else {
+      
+      index++;
+      
+      if  (*(start + index) == '\0' && *(begin + sub_index + 1) != '\0') {
+        
+        return -1;
+      }
+
+    }
+
+  }
+
+  return index + 1;
 }
 
 void String_append(String self, String str) {
@@ -90,7 +115,7 @@ int String_findchar(String self, char character, int index) {
   char* curchar = self.str;
   curchar += index;
   
-  while (*curchar != '\0' && (curchar - self.str < STR_LEN)) {
+  while (curchar - self.str < STR_LEN) {
   
     if (*curchar == character) {
       

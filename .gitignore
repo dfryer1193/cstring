@@ -30,3 +30,6 @@
 
 # Debug files
 *.dSYM/
+
+# Swap files (added by vim)
+.*.swp

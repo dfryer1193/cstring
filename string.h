@@ -10,9 +10,6 @@ typedef struct String String;
 struct String {
   char* str;
 
-  // Constructor
-  String  (*init)     (String working, char* val);
-
   // Methods
   String* (*substr)   (String self, int head, int tail);
   int     (*findchar) (String self, char character, int index);
@@ -22,8 +19,8 @@ struct String {
   void    (*append)   (String self, String str);
 };
 
-String* String_new      (size_t size, String proto, char* val);
-String  String_init     (String self, char* val);
+String* String_new      (String proto, char* val);
+void    String_init     (String* self, char* val);
 void    String_destroy  (String self);
 
 String* String_substr   (String self, int head, int tail);

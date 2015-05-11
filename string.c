@@ -5,23 +5,24 @@
  * Does not assume self exists.
  */
 
-String String_init(String self, char* val) {
+void String_init(String* self, char* val) {
+  char* p_str;
 
-  if(&self) { // make sure you're not doing something silly
- 
-    self.str = val;
-    
-    self.init = String_init;
-    
-    self.substr = String_substr;
-    self.append = String_append;
-    self.findchar = String_findchar;
-    self.contains = String_contains;
-    self.destroy = String_destroy;
+  if(self) { /* make sure you're not doing something silly */
+    self->str = malloc(STR_LEN * sizeof(char));
+    p_str = self->str;
 
+    self->substr = String_substr;
+    self->append = String_append;
+    self->findchar = String_findchar;
+    self->contains = String_contains;
+    self->destroy = String_destroy;
+
+    /* copy val */
+    while((*p_str++ = *val++) != '\0');
   }
 
-  return self;
+  return;
 
 }
 
@@ -56,7 +57,7 @@ String* String_substr(String self, int head, int tail) {
     
     *(substring + i) = '\0';
 
-    return String_new(sizeof(String), newstr, substring);
+    return String_new(newstr, substring);
   }
   
   return NULL;
@@ -137,6 +138,27 @@ int String_findchar(String self, char character, int index) {
   return -1;
 }
 
+String* String_new(String proto, char* val) {
+
+  String* p_proto;
+
+  p_proto = &proto;
+
+  p_proto = malloc(sizeof(String));
+
+  String_init(p_proto, val);
+
+  return p_proto;
+}
+
 void String_destroy(String self) {
+  String* p_self;
+
+  p_self = &self;
+
+  if (p_self != NULL) {
+    free(p_self->str);
+    free(p_self);
+  }
   return;
 }

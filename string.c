@@ -107,6 +107,14 @@ int String_contains(String self, String sub, int index) {
 }
 
 void String_append(String self, String str) {
+  char* p_self;
+  char* p_add;
+
+  p_self = (self.str + self.findchar(self, '\0', 0));
+  p_add = str.str;
+
+  while ((*p_self++ = *p_add++) != '\0');
+
   return;
 }
 
